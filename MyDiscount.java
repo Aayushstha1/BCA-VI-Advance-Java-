@@ -14,6 +14,8 @@
    It shall compute the total bill if a customer purchase $x of products and $y of services, for a visit. 
    Also write a test program to exercise all the classes.*/
 
+import java.lang.reflect.Member;
+import java.util.Scanner;
 
 class Customer{
     private String name;
@@ -96,39 +98,118 @@ class Visit {
 }
 
 public class MyDiscount {
-    public static void main(String[] args) {
-        Customer premiumCustomer = new Customer();
-        premiumCustomer.setName("Aayush");
-        premiumCustomer.setMember(true);
-        premiumCustomer.setMemberType("premium");
 
-        Customer regularCustomer = new Customer();
-        regularCustomer.setName("hari");
-        regularCustomer.setMember(false);
-        regularCustomer.setMemberType("");
+ public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    Customer customer = new Customer();
 
-        Visit premiumVisit = new Visit(premiumCustomer);
-        premiumVisit.setServiceExpense(100.0);
-        premiumVisit.setProductExpense(50.0);
+    System.out.println( "Enter the customer name:");
+    customer.setName(scanner.nextLine());
 
-        Visit regularVisit = new Visit(regularCustomer);
-        regularVisit.setServiceExpense(100.0);
-        regularVisit.setProductExpense(50.0);
+    System.out.println("Is the customer a member (true/false)?");
+    customer.setMember(scanner.nextBoolean());
 
-        System.out.println("Premium Member Bill Details:");
-        System.out.println("Customer: " + premiumCustomer.getName());
-        System.out.println("Service Expense: $" + premiumVisit.getServiceExpense());
-        System.out.println("Product Expense: $" + premiumVisit.getProductExpense());
-        System.out.println("Total Bill: $" + premiumVisit.getTotalExpense());
-        System.out.println();
-
-        System.out.println("Regular Customer Bill Details:");
-        System.out.println("Customer: " + regularCustomer.getName());
-        System.out.println("Service Expense: $" + regularVisit.getServiceExpense());
-        System.out.println("Product Expense: $" + regularVisit.getProductExpense());
-        System.out.println("Total Bill: $" + regularVisit.getTotalExpense());
+    if(customer.isMember()){
+        scanner.nextLine();
+        System.out.print("Enter member type (premium/gold/silver): ");
+        System.out.println(scanner.nextLine().toLowerCase());
     }
+    Visit visit = new Visit(customer);
+    System.out.println("Enter the Services Expense: Rs.");
+    visit.setServiceExpense(scanner.nextDouble());
+    
+    System.out.println("Enter the Product Expense: Rs");
+    visit.setProductExpense(scanner.nextDouble());
+
+    System.out.println("Customer Name: " + customer.getName());
+    System.out.println("Member Type: " +(customer.isMember()? customer.getMemberType() : "Non-member" ) );
+    System.out.println("Service Expense: Rs" + visit.getServiceExpense() );
+    System.out.println("Product Expense: Rs" + visit.getProductExpense() );
+    System.out.println("Total Expense: Rs" + visit.getTotalExpense());
+    scanner.close();
+
+
+ }
+
 }
+
+//         Scanner scanner = new Scanner(System.in);
+//         Customer customer = new Customer();
+        
+//         System.out.print("Enter customer name: ");
+//         customer.setName(scanner.nextLine());
+        
+//         System.out.print("Is customer a member (true/false)? ");
+//         customer.setMember(scanner.nextBoolean());
+        
+//         if(customer.isMember()) {
+//             scanner.nextLine(); 
+//             System.out.print("Enter member type (premium/gold/silver): ");
+//             customer.setMemberType(scanner.nextLine().toLowerCase());
+//         }
+        
+//         Visit visit = new Visit(customer);
+        
+//         System.out.print("Enter service expense: Rs.");
+//         visit.setServiceExpense(scanner.nextDouble());
+        
+//         System.out.print("Enter product expense: Rs.");
+//         visit.setProductExpense(scanner.nextDouble());
+        
+//         System.out.println("\n----- Bill Details -----");
+//         System.out.println("Customer Name: " + customer.getName());
+//         System.out.println("Member Type: " + (customer.isMember() ? customer.getMemberType() : "Non-Member"));
+//         System.out.println("Service Expense: Rs." + visit.getServiceExpense());
+//         System.out.println("Product Expense: Rs." + visit.getProductExpense());
+//         System.out.println("Total Expense: Rs." + visit.getTotalExpense());
+        
+//         scanner.close();
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+    // public static void main(String[] args) {
+    //     Customer premiumCustomer = new Customer();
+    //     premiumCustomer.setName("Aayush");
+    //     premiumCustomer.setMember(true);
+    //     premiumCustomer.setMemberType("premium");
+
+    //     Customer regularCustomer = new Customer();
+    //     regularCustomer.setName("hari");
+    //     regularCustomer.setMember(false);
+    //     regularCustomer.setMemberType("");
+
+    //     Visit premiumVisit = new Visit(premiumCustomer);
+    //     premiumVisit.setServiceExpense(100.0);
+    //     premiumVisit.setProductExpense(50.0);
+
+    //     Visit regularVisit = new Visit(regularCustomer);
+    //     regularVisit.setServiceExpense(100.0);
+    //     regularVisit.setProductExpense(50.0);
+
+    //     System.out.println("Premium Member Bill Details:");
+    //     System.out.println("Customer: " + premiumCustomer.getName());
+    //     System.out.println("Service Expense: RS" + premiumVisit.getServiceExpense());
+    //     System.out.println("Product Expense: Rs" + premiumVisit.getProductExpense());
+    //     System.out.println("Total Bill: Rs" + premiumVisit.getTotalExpense());
+    //     System.out.println();
+
+    //     System.out.println("Regular Customer Bill Details:");
+    //     System.out.println("Customer: " + regularCustomer.getName());
+    //     System.out.println("Service Expense: RS" + regularVisit.getServiceExpense());
+    //     System.out.println("Product Expense: RS" + regularVisit.getProductExpense());
+    //     System.out.println("Total Bill: Rs" + regularVisit.getTotalExpense());
+     
+
         
    
 
