@@ -103,17 +103,19 @@ public class MyDiscount {
     Scanner scanner = new Scanner(System.in);
     Customer customer = new Customer();
 
-    System.out.println( "Enter the customer name:");
+    System.out.println("Enter the customer name:");
     customer.setName(scanner.nextLine());
 
     System.out.println("Is the customer a member (true/false)?");
     customer.setMember(scanner.nextBoolean());
 
-    if(customer.isMember()){
-        scanner.nextLine();
+    if(customer.isMember()) {
+        scanner.nextLine(); // Clear the buffer
         System.out.print("Enter member type (premium/gold/silver): ");
-        System.out.println(scanner.nextLine().toLowerCase());
+        String memberType = scanner.nextLine().toLowerCase();
+        customer.setMemberType(memberType); // This line was missing
     }
+    
     Visit visit = new Visit(customer);
     System.out.println("Enter the Services Expense: Rs.");
     visit.setServiceExpense(scanner.nextDouble());
@@ -122,15 +124,13 @@ public class MyDiscount {
     visit.setProductExpense(scanner.nextDouble());
 
     System.out.println("Customer Name: " + customer.getName());
-    System.out.println("Member Type: " +(customer.isMember()? customer.getMemberType() : "Non-member" ) );
-    System.out.println("Service Expense: Rs" + visit.getServiceExpense() );
-    System.out.println("Product Expense: Rs" + visit.getProductExpense() );
-    System.out.println("Total Expense: Rs" + visit.getTotalExpense());
+    System.out.println("Member Type: " + (customer.isMember() ? customer.getMemberType() : "Non-member"));
+    System.out.println("Service Expense: Rs." + visit.getServiceExpense());
+    System.out.println("Product Expense: Rs." + visit.getProductExpense());
+    System.out.println("Total Expense: Rs." + visit.getTotalExpense());
+    
     scanner.close();
-
-
- }
-
+}
 }
 
 //         Scanner scanner = new Scanner(System.in);
@@ -235,4 +235,4 @@ public class MyDiscount {
 // public class day4 {
 //     public static void main(String[] args) {
 //         // Test the system
-//        
+//
