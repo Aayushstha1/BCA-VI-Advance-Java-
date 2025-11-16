@@ -8,7 +8,7 @@ public class FrameDialog {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(null);
 
-        JButton b = new JButton("Open");
+        JButton b = new JButton("CLICK");
         b.setBounds(100, 50, 80, 30);
         f.add(b);
 
@@ -35,9 +35,6 @@ public class FrameDialog {
                 JButton add = new JButton("Add");
                 add.setBounds(40, 90, 70, 30);
                 d.add(add);
-                JButton close = new JButton("Close");
-                close.setBounds(140, 90, 70, 30);
-                d.add(close);
 
                 JLabel res = new JLabel("");
                 res.setBounds(10, 130, 220, 25);
@@ -50,24 +47,18 @@ public class FrameDialog {
                             double b = Double.parseDouble(t2.getText());
                             double s = a + b;
                             res.setText("Sum: " + s);
-                        }catch(Exception ex){
+                        }
+                        catch(Exception ex){
                             JOptionPane.showMessageDialog(d, "Enter valid numbers");
                         }
                     }
                 });
-
-                close.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent ev){
-                        d.dispose();
-                    }
-                });
-
                 d.setLocationRelativeTo(f);
                 d.setVisible(true);
             }
         });
-
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
-}
+} 
+
