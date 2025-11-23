@@ -1,7 +1,9 @@
 
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class database {
@@ -13,16 +15,24 @@ public class database {
 
          // If you have the MySQL JDBC driver on the classpath this will attempt connection
          Connection conn = DriverManager.getConnection(url, username, password);
-         System.out.println("connecting....");
-         if (conn != null) {
-            System.out.println("Connected to database");
-            conn.close();
-         }
+         java.sql.Statement stmt= conn.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT * FROM students");
 
+         while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            int age = rs.getInt("age");
+            System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+            
+         }
+          rs.close();
+          stmt.close();
+          conn.close();
+        
          }
          catch (SQLException e ){
             e.printStackTrace();
          }
-
     }
 }
+
