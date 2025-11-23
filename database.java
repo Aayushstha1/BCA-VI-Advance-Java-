@@ -22,7 +22,8 @@ public class database {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             int age = rs.getInt("age");
-            System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+            String grade = rs.getString("grade");
+            System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age + ", Grade: " + grade);
             
          }
           rs.close();
