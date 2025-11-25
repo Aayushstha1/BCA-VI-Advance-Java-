@@ -70,8 +70,12 @@ public class Employee5 {
               PreparedStatement pst = con.prepareStatement("INSERT INTO employee VALUES (?, ?, ?, ?)") ) {
 
             System.out.print("Enter ID: ");
-            int id = sc.nextInt();
-            sc.nextLine();
+            int id = Integer.parseInt(sc.nextLine().trim());
+
+            if (existsId(id)) {
+                System.out.println("Employee ID " + id + " already exists. Insert aborted.");
+                return;
+            }
 
             System.out.print("Enter Name: ");
             String name = sc.nextLine();
@@ -106,8 +110,12 @@ public class Employee5 {
               PreparedStatement pst = con.prepareStatement("UPDATE employee SET name=?, salary=?, branch=? WHERE id=?") ) {
 
             System.out.print("Enter Employee ID to Update: ");
-            int id = sc.nextInt();
-            sc.nextLine();
+            int id = Integer.parseInt(sc.nextLine().trim());
+
+            if (!existsId(id)) {
+                System.out.println("Employee ID " + id + " not found. Update aborted.");
+                return;
+            }
 
             System.out.print("Enter New Name: ");
             String name = sc.nextLine();
@@ -123,6 +131,13 @@ public class Employee5 {
             pst.setDouble(2, salary);
             pst.setString(3, branch);
             pst.setInt(4, id);
+
+            System.out.print("Confirm update (y/n): ");
+            String confirm = sc.nextLine().trim();
+            if (!confirm.equalsIgnoreCase("y")) {
+                System.out.println("Update cancelled.");
+                return;
+            }
 
             int rows = pst.executeUpdate();
 
@@ -146,9 +161,22 @@ public class Employee5 {
               PreparedStatement pst = con.prepareStatement("DELETE FROM employee WHERE id=?") ) {
 
             System.out.print("Enter Employee ID to Delete: ");
-                        int id = Integer.parseInt(sc.nextLine().trim());
 
-                        pst.setInt(1, id);
+            int id = Integer.parseInt(sc.nextLine().trim());
+
+            if (!existsId(id)) {
+                System.out.println("Employee ID " + id + " not found. Delete aborted.");
+                return;
+            }
+
+            System.out.print("Are you sure you want to delete employee ID " + id + "? (y/n): ");
+            String confirm = sc.nextLine().trim();
+            if (!confirm.equalsIgnoreCase("y")) {
+                System.out.println("Delete cancelled.");
+                return;
+            }
+
+            pst.setInt(1, id);
 
             int rows = pst.executeUpdate();
 
@@ -202,5 +230,19 @@ public class Employee5 {
             sc.nextLine();
         } catch (Exception ignored) {
         }
+    }
+
+    // Returns true if a row with given id exists in the employee table
+    private static boolean existsId(int id) {
+        try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM employee WHERE id = ?")) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking id existence: " + e.getMessage());
+        }
+        return false;
     }
 }
