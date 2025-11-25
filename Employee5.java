@@ -11,12 +11,8 @@ public class Employee5 {
 
     public static void main(String[] args) {
 
-        // Load MySQL Driver
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            System.out.println("Driver Load Error: " + e);
-        }
+        // Startup driver check and helpful message if driver not available
+        checkJdbcDriver();
 
         // use shared scanner `sc`
 
@@ -64,6 +60,43 @@ public class Employee5 {
         }
     }
 
+    // Print a helpful warning if no MySQL JDBC driver is available on the runtime classpath
+    private static void checkJdbcDriver() {
+        boolean found = false;
+        try {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                found = true;
+            } catch (ClassNotFoundException e) {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    found = true;
+                } catch (ClassNotFoundException ignored) {
+                    // no driver class found via Class.forName
+                }
+            }
+
+            if (!found) {
+                // try to inspect registered drivers
+                java.util.Enumeration<java.sql.Driver> en = java.sql.DriverManager.getDrivers();
+                while (en.hasMoreElements()) {
+                    java.sql.Driver d = en.nextElement();
+                    String cn = d.getClass().getName().toLowerCase();
+                    if (cn.contains("mysql")) { found = true; break; }
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+        if (!found) {
+            System.out.println("\nWARNING: MySQL JDBC driver not found on runtime classpath.");
+            System.out.println("If you see 'No suitable driver found' when performing DB operations,\nput the Connector/J JAR in the project folder and run with it on the classpath.");
+            System.out.println("Example (PowerShell):");
+            System.out.println("  & 'C:\\Program Files\\Java\\jdk-24\\bin\\javac.exe' -cp \".;mysql-connector-java-8.1.0.jar\" Employee5.java");
+            System.out.println("  & 'C:\\Program Files\\Java\\jdk-24\\bin\\java.exe' -cp \".;mysql-connector-java-8.1.0.jar\" Employee5\n");
+        }
+    }
+
     // INSERT EMPLOYEE
     public static void insertEmployee() {
           try (Connection con = DriverManager.getConnection(URL, USER, PASS);
@@ -106,7 +139,7 @@ public class Employee5 {
 
     // UPDATE EMPLOYEE
     public static void updateEmployee() {
-          try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+          try (Connection con = getConnection();
               PreparedStatement pst = con.prepareStatement("UPDATE employee SET name=?, salary=?, branch=? WHERE id=?") ) {
 
             System.out.print("Enter Employee ID to Update: ");
@@ -157,7 +190,7 @@ public class Employee5 {
 
     // DELETE EMPLOYEE
     public static void deleteEmployee() {
-          try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+          try (Connection con = getConnection();
               PreparedStatement pst = con.prepareStatement("DELETE FROM employee WHERE id=?") ) {
 
             System.out.print("Enter Employee ID to Delete: ");
@@ -196,8 +229,8 @@ public class Employee5 {
 
     // DISPLAY EMPLOYEES
     public static void displayEmployees() {
-        try (Connection con = DriverManager.getConnection(URL, USER, PASS);
-             Statement st = con.createStatement()) {
+           try (Connection con = getConnection();
+               Statement st = con.createStatement()) {
 
             ResultSet rs = st.executeQuery("SELECT * FROM employee");
 
@@ -234,7 +267,7 @@ public class Employee5 {
 
     // Returns true if a row with given id exists in the employee table
     private static boolean existsId(int id) {
-        try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+        try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM employee WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -244,5 +277,21 @@ public class Employee5 {
             System.out.println("Error checking id existence: " + e.getMessage());
         }
         return false;
+    }
+
+    // Helper to load driver (if available) and open a connection. Provides clearer messaging
+    private static Connection getConnection() throws SQLException {
+        try {
+            // try current driver class
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            try {
+                // fallback to older driver class name
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                // driver class not found on classpath -- let DriverManager throw a clear exception
+            }
+        }
+        return DriverManager.getConnection(URL, USER, PASS);
     }
 }
