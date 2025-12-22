@@ -1,5 +1,6 @@
 <#
-Simple helper to compile & run Employee5 with MySQL connector jars.
+Simple helper to compile & run ScrollExample with MySQL connector jars from the project root.
+Place the connector JAR (e.g. mysql-connector-j-8.4.0.jar) in the project root and run this script.
 Usage: Right-click -> Run with PowerShell, or from PowerShell: .\run.ps1
 #>
 
@@ -19,9 +20,9 @@ if ($jars.Count -eq 0) {
 
 $cp = ".;" + ($jars -join ';')
 
-Write-Host "Compiling Employee5.java..."
-& $javac -cp $cp Employee5.java
+Write-Host "Compiling ScrollExample.java..."
+& $javac -cp $cp ScrollExample.java
 if ($LASTEXITCODE -ne 0) { Write-Host "Compilation failed."; exit $LASTEXITCODE }
 
-Write-Host "Running Employee5 (press Ctrl+C to stop)."
-& $java -cp $cp Employee5
+Write-Host "Running ScrollExample (press Ctrl+C to stop)."
+& $java -cp $cp ScrollExample
