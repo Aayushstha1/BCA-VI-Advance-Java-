@@ -9,7 +9,6 @@
 
 <h2>BMI Calculator (Single JSP Page)</h2>
 
-<!-- Input Form -->
 <form method="post">
     
     Weight (kg):
@@ -27,7 +26,6 @@
 <hr>
 
 <%
-    // Run calculation ONLY after form submit
     if(request.getMethod().equalsIgnoreCase("POST")) {
 
         try {
@@ -63,3 +61,5 @@ Category: <b><%= category %></b>
 
 </body>
 </html>
+
+ create a jsp program to accept student name , roll number, and marks in five subjects. calculate total percentage and display division . 
