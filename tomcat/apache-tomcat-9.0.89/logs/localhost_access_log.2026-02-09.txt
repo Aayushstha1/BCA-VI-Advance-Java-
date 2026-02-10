@@ -1,0 +1,16 @@
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:03:23 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:04:19 +0545] "GET /total-percentage/total-percentage.jsp HTTP/1.1" 404 771
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:04:33 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:04:59 +0545] "POST /percentage/total-percentage.jsp HTTP/1.1" 200 1095
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:06:47 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:08 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:11 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:11 +0545] "GET /favicon.ico HTTP/1.1" 200 21630
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:11 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:12 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:12 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:12 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:12 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:12 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:07:31 +0545] "GET /percentage/total-percentage.jsp HTTP/1.1" 200 916
+0:0:0:0:0:0:0:1 - - [09/Feb/2026:07:25:18 +0545] "POST /percentage/total-percentage.jsp HTTP/1.1" 200 1091
